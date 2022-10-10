@@ -182,7 +182,7 @@ function Home(props) {
             <View style={styles.container}>
                 {activeTab == "quickLoan" &&    <Quickloan />    }
                 {activeTab == "sales" &&  <Sales /> }
-                {activeTab == "collection" && <Collection />}
+                {activeTab == "collection" && <Collection  navigation={props.navigation.navigate}/>}
                 {activeTab == "lms" && <Lms />}
             </View>
         </View>

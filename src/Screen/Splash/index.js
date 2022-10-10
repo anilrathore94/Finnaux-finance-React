@@ -9,11 +9,12 @@ import { screenHeight, screenWidth } from "../../constants/Sizes.constant";
 function Splash(props) {
  useEffect(() => {
     const checkLogin = async()=>{
+        //AsyncStorage.clear();
         setTimeout(async() => { 
             let empId= await AsyncStorage.getItem("empId");
             let token= await AsyncStorage.getItem("token");
 
-            // console.log(empId)
+            console.log(token)
             if(empId == null || empId == "" && token == ""){
                 props.navigation.navigate('IsExist', { backScreen: 'Splash'} ) 
             }else if(token != "" || token != null){

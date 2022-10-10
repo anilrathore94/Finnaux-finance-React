@@ -1,17 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
-import { screenWidth, screenHeight } from "./../../../constants/Sizes.constant";
+import { screenWidth, screenHeight } from "./../../../../constants/Sizes.constant";
 // import rightIcon from "./../../../asstes/icon/next.png";
 
-function Collection(props) {
-    const {navigation } = props;
+function CollectionList(props) {
     return (
         <View style={styles.collectionView}>
             <View style={styles.collectionBoxOuterContainer}>
                 <TouchableOpacity
                     style={styles.collectionBoxContainer}
                     onPress={() => {
-                        navigation("CollectionList", { backScreen: 'Collection'} )  ;
+                        props.navigation.navigate('IsExist', { backScreen: 'Splash'} ) 
+                        // props.navigation.navigate("newPin");
                     }}
                 >
                     {/* app close kr chlao o uninstall kro fir android se build run kr k start kro pura
@@ -78,4 +78,4 @@ const styles = StyleSheet.create({
     collectionBoxMiddle: { fontSize: 20, color: "#4DC3A3" },
     collectionBoxRight: {},
 });
-export default Collection;
+export default CollectionList;
