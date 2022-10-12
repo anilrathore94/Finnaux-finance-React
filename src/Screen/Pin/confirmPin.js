@@ -39,62 +39,59 @@ import Loading from "../../component/loading";
 
 function ConfirmPin(props) {
     const [value, setValue] = useState("");
-    const [load, setLoad] = useState(false)
-    
-    
+    const [load, setLoad] = useState(false);
+
     const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
     const [cell, getCellOnLayoutHandler] = useClearByFocusCell({
         value,
-        setValue
+        setValue,
     });
     const CELL_COUNT = 4;
     let requestData = null;
 
-  useEffect(()=>{
-   // setEmail('anil')
-  }),[];
+    useEffect(() => {
+        // setEmail('anil')
+    }),
+        [];
 
-  const otpFill = (e) => {
-    setValue(e) 
-   }
+    const otpFill = (e) => {
+        setValue(e);
+    };
 
-   const new_pin_method = async () => {
-    let empId =await AsyncStorage.getItem("empId");
-    let deviceId =await AsyncStorage.getItem("deviceId");
+    const new_pin_method = async () => {
+        let empId = await AsyncStorage.getItem("empId");
+        let deviceId = await AsyncStorage.getItem("deviceId");
+        console.log(value);
+        let data = {
+            EmpId: empId,
+            Pin: value,
+            MobileDeviceId: deviceId,
+            Status: "OLD",
+        };
+        console.log("request data", data);
+        setLoad(true);
+        let result = await get_new_pin(data);
+        console.log("response Data===", result);
 
-    let data = {
-        "EmpId": empId,
-        "Pin": value,
-        "MobileDeviceId": deviceId,
-        "Status": "OLD"
-      
-    }
-    console.log("request data" , data)
-    setLoad(true)
-    let result = await get_new_pin(data)
-    console.log('response Data===', result)
+        if (result.CODE === 1) {
+            setLoad(false);
+            AsyncStorage.setItem("token", result.Token);
+            AsyncStorage.setItem("name", result.FirstName);
+            AsyncStorage.setItem("ProfilePic", result.ProfilePic);
+            AsyncStorage.setItem("email", result.Email);
+            props.navigation.navigate("Home");
+        } else {
+            setLoad(false);
+            Toast.show({ type: "error", text1: result.MSG });
+        }
+    };
 
-    if (result.CODE === 1) {
-        setLoad(false) 
-          AsyncStorage.setItem("token",result.Token); 
-          AsyncStorage.setItem("name",result.FirstName); 
-          AsyncStorage.setItem("ProfilePic",result.ProfilePic); 
-          AsyncStorage.setItem("email",result.Email); 
-          props.navigation.navigate("Home");
-
-    } else {
-        setLoad(false)
-        Toast.show({ type: 'error', text1: result.MSG }) 
-    }
-}
-
-   
     return (
         <View style={[StyleConstants.container]}>
-            <View style={{flex:9,width:'100%'}}>
+            <View style={{ flex: 9, width: "100%" }}>
                 <Image
-                    style={{ width: 200, height: 100,margin:80 }} 
-                    resizeMode={'contain'}
+                    style={{ width: 200, height: 100, margin: 80 }}
+                    resizeMode={"contain"}
                     source={require("./../../asstes/image/logo.jpg")}
                 />
                 <Text
@@ -110,35 +107,52 @@ function ConfirmPin(props) {
                     Enter Confirm Pin...!
                 </Text>
                 <CodeField
-                                        ref={ref}
-                                        {...cell}
-                                        value={value}
-                                        onChangeText={(e) => otpFill(e)}
-                                        cellCount={CELL_COUNT}
-                                        rootStyle={StyleConstants.codeFieldRoot}
-                                        keyboardType="number-pad"
-                                        textContentType="oneTimeCode"
-                                        autoFocus={true}
-                                        renderCell={({ index, symbol, isFocused }) => (
-                                            <Text
-                                                key={index}
-                                                style={[StyleConstants.cell, isFocused && StyleConstants.focusCell]}
-                                                onLayout={getCellOnLayoutHandler(index)}>
-                                                {symbol || (isFocused ? <Cursor /> : null)}
-                                            </Text>
-                                        )}
-                                    />
+                    ref={ref}
+                    {...cell}
+                    value={value}
+                    onChangeText={(e) => otpFill(e)}
+                    cellCount={CELL_COUNT}
+                    rootStyle={StyleConstants.codeFieldRoot}
+                    keyboardType="number-pad"
+                    textContentType="oneTimeCode"
+                    autoFocus={true}
+                    renderCell={({ index, symbol, isFocused }) => (
+                        <Text
+                            key={index}
+                            style={[
+                                StyleConstants.cell,
+                                isFocused && StyleConstants.focusCell,
+                            ]}
+                            onLayout={getCellOnLayoutHandler(index)}
+                        >
+                            {symbol || (isFocused ? <Cursor /> : null)}
+                        </Text>
+                    )}
+                />
 
-                <LargefillBtn label={"Submit"} onPress={()=>new_pin_method()}/> 
+                <LargefillBtn
+                    label={"Submit"}
+                    onPress={() => new_pin_method()}
+                />
             </View>
 
-            <View style={{flex:1}}>
-            <View style={{flexDirection:'row',justifyContent:'center',marginTop:20}}>
-                <Text style={[StyleConstants.textStyle,{}]}>Powered By.</Text>
-                <Image style={{ marginLeft: 10, width: 20, height: 20 }}  source={require("./../../asstes/image/ic_icon.jpg")}  />
+            <View style={{ flex: 1 }}>
+                <View
+                    style={{
+                        flexDirection: "row",
+                        justifyContent: "center",
+                        marginTop: 20,
+                    }}
+                >
+                    <Text style={[StyleConstants.textStyle, {}]}>
+                        Powered By.
+                    </Text>
+                    <Image
+                        style={{ marginLeft: 10, width: 20, height: 20 }}
+                        source={require("./../../asstes/image/ic_icon.jpg")}
+                    />
+                </View>
             </View>
-            </View>
-            
         </View>
     );
 }
@@ -149,8 +163,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: "center",
         // justifyContent: "center",
-    }
-    
+    },
 });
 
 export default ConfirmPin;

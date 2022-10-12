@@ -4,18 +4,18 @@ import { screenWidth, screenHeight } from "./../../../constants/Sizes.constant";
 // import rightIcon from "./../../../asstes/icon/next.png";
 
 function Collection(props) {
-    const {navigation } = props;
+    const { navigation } = props;
     return (
         <View style={styles.collectionView}>
             <View style={styles.collectionBoxOuterContainer}>
                 <TouchableOpacity
                     style={styles.collectionBoxContainer}
                     onPress={() => {
-                        navigation("CollectionList", { backScreen: 'Collection'} )  ;
+                        navigation("CollectionList", {
+                            backScreen: "Collection",
+                        });
                     }}
                 >
-                    {/* app close kr chlao o uninstall kro fir android se build run kr k start kro pura
-                     okk k*/}
                     {/* <Image
                         source={rightIcon}
                         style={{
@@ -45,8 +45,6 @@ function Collection(props) {
         </View>
     );
 }
-
-
 
 const styles = StyleSheet.create({
     collectionView: {

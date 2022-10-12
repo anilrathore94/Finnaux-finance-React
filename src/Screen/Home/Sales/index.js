@@ -1,71 +1,75 @@
-import { ImageBackground, StyleSheet, Text, View,FlatList } from "react-native";
+import {
+    ImageBackground,
+    StyleSheet,
+    Text,
+    View,
+    FlatList,
+} from "react-native";
 import React, { useEffect, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import { screenWidth, screenHeight } from "./../../../constants/Sizes.constant";
 import { get_sales_menu } from "../../../services/Sales";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import Loading from "./../../../component/loading"; 
+import Loading from "./../../../component/loading";
+
 const index = () => {
     const [menu, setMenu] = useState([]);
-    const [load, setLoad] = useState(false)
+    const [load, setLoad] = useState(false);
     useEffect(() => {
         get_menu();
     }, []);
     const get_menu = async () => {
-        let empId= await AsyncStorage.getItem("empId");
+        let empId = await AsyncStorage.getItem("empId");
         let data = {
-            LoginUserId: empId
+            LoginUserId: empId,
         };
         setLoad(true);
         let result = await get_sales_menu(data);
         console.log("response Data === ", result);
-        if(result.length > 0){
+        if (result.length > 0) {
             setLoad(false);
         }
-        // 
-       setMenu(result);
+        //
+        setMenu(result);
     };
 
-    const _render_menu_Item= ({ item, index }) => {
-        return (   
-        <ImageBackground
+    const _render_menu_Item = ({ item, index }) => {
+        return (
+            <ImageBackground
                 source={require("./../../../asstes/image/cardBg.jpeg")}
                 style={styles.boxContainer}
                 key={index}
             >
                 <Text
                     style={styles.textNumberStyle}
-                    onPress={() => {
-                        goToCollection_method();
-                    }}
+                    // onPress={() => {
+                    //     goToCollection_method();
+                    // }}
                 >
                     {item.ItemCount}
                 </Text>
-                <Text style={styles.textTitleStyle}>
-                    {item.EmpProcessName}
-                </Text>
+                <Text style={styles.textTitleStyle}>{item.EmpProcessName}</Text>
             </ImageBackground>
-        ) 
-    }
+        );
+    };
     return (
         <View
-            style={[ 
+            style={[
                 {
                     width: screenWidth,
                     height: screenHeight,
-                    paddingBottom:screenHeight/3 + 80
+                    paddingBottom: screenHeight / 3 + 80,
                 },
             ]}
         >
-           {load && <Loading />}
-           <FlatList
-                    data={menu}
-                    renderItem={_render_menu_Item}
-                    numColumns={3}
-                    keyExtractor={(item, index) => index} 
-                />
-              
+            {load && <Loading />}
+            <FlatList
+                data={menu}
+                renderItem={_render_menu_Item}
+                numColumns={3}
+                keyExtractor={(item, index) => index}
+            />
         </View>
-        
     );
 };
 
@@ -97,7 +101,6 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 4.84,
-
         elevation: 8,
     },
     textNumberStyle: {

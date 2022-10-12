@@ -5,7 +5,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const get_sales_menu = async (data) => {
     let base_url = await AsyncStorage.getItem("base_url");
     let token = await AsyncStorage.getItem("token");
-    console.log(token)
+    // console.log(token)
     try {
         let result = await opsService.postData(
             base_url + `LOS/LOS_DashboardCount`,

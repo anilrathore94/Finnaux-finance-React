@@ -25,35 +25,39 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function Home(props) {
     const [activeTab, setActiveTab] = useState("quickLoan");
-    const [userImage,setUserImage] = useState("")
-    const [userEmail,setUserEmail] = useState("") 
-    const [userName,setUserName] = useState("")
+    const [userImage, setUserImage] = useState("");
+    const [userEmail, setUserEmail] = useState("");
+    const [userName, setUserName] = useState("");
 
-      useEffect(()=>{
-        const getProfile=async()=>{
-         setUserEmail(await AsyncStorage.getItem("email"))
-         setUserImage(await AsyncStorage.getItem("ProfilePic"))
-         setUserName(await AsyncStorage.getItem("name"))
-
-        }
+    useEffect(() => {
+        const getProfile = async () => {
+            setUserEmail(await AsyncStorage.getItem("email"));
+            setUserImage(await AsyncStorage.getItem("ProfilePic"));
+            setUserName(await AsyncStorage.getItem("name"));
+        };
         getProfile();
         // props.navigation.navigate("Collection");
-    },[]);
+    }, []);
 
     return (
         <View>
             <View style={styles.header}>
                 <View style={styles.upperHeaderContainer}>
                     <View style={styles.iconsContainer}>
-                        <Image source={userImage != null ? {uri:userImage} : profileIcon} style={styles.icons} />
+                        <Image
+                            source={
+                                userImage != null
+                                    ? { uri: userImage }
+                                    : profileIcon.toString()
+                            }
+                            style={styles.icons}
+                        />
                     </View>
                     <View style={styles.userInfoContainer}>
-                        <Text style={styles.userInfoNameText}>
-                           {userName}
-                        </Text>
+                        <Text style={styles.userInfoNameText}>{userName}</Text>
                         <Text style={styles.userInfoEmailText}>
-                        {userEmail}
-                        </Text> 
+                            {userEmail}
+                        </Text>
                     </View>
                 </View>
             </View>
@@ -180,9 +184,11 @@ function Home(props) {
             </View>
 
             <View style={styles.container}>
-                {activeTab == "quickLoan" &&    <Quickloan />    }
-                {activeTab == "sales" &&  <Sales /> }
-                {activeTab == "collection" && <Collection  navigation={props.navigation.navigate}/>}
+                {activeTab == "quickLoan" && <Quickloan />}
+                {activeTab == "sales" && <Sales />}
+                {activeTab == "collection" && (
+                    <Collection navigation={props.navigation.navigate} />
+                )}
                 {activeTab == "lms" && <Lms />}
             </View>
         </View>

@@ -13,9 +13,9 @@ function App() {
 // //Ignore all log notifications 
 // LogBox.ignoreAllLogs();
   return (
-    <View style={{ flex: 1,backgroundColor:'#fff' }}>
+    <View style={{ flex: 1 }}>
      <Routes />
-      <Toast  />  
+      <Toast  />    
     </View>
   );
 }
