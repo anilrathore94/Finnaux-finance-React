@@ -13,7 +13,6 @@
           <stringArguments>
             <stringArg name="classpath">
               <args>
-                <arg>$MODULE_DIR$/../../../../node_modules/react-native-screens/android/build/intermediates/compile_library_classes_jar/debug/classes.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/66d59e3c479db3ee1833aa8684ea1547/transformed/jetified-react-native-0.70.1-debug-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/f94f20c6d976e4beac5cd6d2557778c1/transformed/jetified-okhttp-urlconnection-4.9.2.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/90b2a427a6da93f11e1b3a584aab6b0c/transformed/jetified-kotlin-stdlib-jdk8-1.6.21.jar</arg>

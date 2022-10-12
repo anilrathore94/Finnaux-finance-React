@@ -7,51 +7,65 @@ import { ColorsConstant } from "../../constants/Colors.constant";
 import { c, StyleConstants } from "../../constants/Style.constant";
 import { screenHeight, screenWidth } from "../../constants/Sizes.constant";
 function Splash(props) {
- useEffect(() => {
-    const checkLogin = async()=>{
-        setTimeout(async() => { 
-            let empId= await AsyncStorage.getItem("empId");
-            let token= await AsyncStorage.getItem("token");
+    useEffect(() => {
+        const checkLogin = async () => {
+            setTimeout(async () => {
+                let empId = await AsyncStorage.getItem("empId");
+                let token = await AsyncStorage.getItem("token");
 
-            // console.log(empId)
-            if(empId == null || empId == "" && token == ""){
-                props.navigation.navigate('IsExist', { backScreen: 'Splash'} ) 
-            }else if(token != "" || token != null){
-               props.navigation.navigate('ConfirmPin', { backScreen: 'Splash'} ) 
-            }else{
-                props.navigation.navigate('newPin', { backScreen: 'Splash'} ) 
-            }
-      }, 2500);
-    } 
-    checkLogin();
-  }, []);
-     
-    return ( 
-           <View style={ls.flexView} >
-               <View style={{flex: 1,alignItems: 'center',  justifyContent: 'center'}}>
-                  <Image resizeMode="stretch" source={require('./../../asstes/image/login_logo.png')} style={ls.logo}/>
-                </View>
-                {/* <View style={{ flex: 1 }}>
+                console.log(token);
+                if (empId == null || (empId == "" && token == "")) {
+                    props.navigation.navigate("IsExist", {
+                        backScreen: "Splash",
+                    });
+                } else if (token != "" || token != null) {
+                    props.navigation.navigate("ConfirmPin", {
+                        backScreen: "Splash",
+                    });
+                } else {
+                    props.navigation.navigate("newPin", {
+                        backScreen: "Splash",
+                    });
+                }
+            }, 2500);
+        };
+        checkLogin();
+    }, []);
+
+    return (
+        <View style={ls.flexView}>
+            <View
+                style={{
+                    flex: 1,
+                    alignItems: "center",
+                    justifyContent: "center",
+                }}
+            >
+                <Image
+                    resizeMode="stretch"
+                    source={require("./../../asstes/image/login_logo.png")}
+                    style={ls.logo}
+                />
+            </View>
+            {/* <View style={{ flex: 1 }}>
                 <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 20 }}>
                     <Text style={[StyleConstants.textStyle, {}]}>Powered By.</Text>
                     <Image style={{ marginLeft: 10, width: 20, height: 20 }} source={require("./../../asstes/image/ic_icon.jpg")} />
                 </View>
             </View> */}
-            </View> 
-    )
+        </View>
+    );
 }
 const ls = StyleSheet.create({
     flexView: {
-        flex: 1 , 
+        flex: 1,
         backgroundColor: ColorsConstant.White,
-        alignItems: 'center',
-        justifyContent: 'center'
+        alignItems: "center",
+        justifyContent: "center",
     },
-    logo:{
-       height:160,
-       width: 200, 
-
-    }
-
-})
+    logo: {
+        height: 160,
+        width: 200,
+    },
+});
 export default Splash;
